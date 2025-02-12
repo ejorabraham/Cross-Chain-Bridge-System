@@ -13,3 +13,5 @@ L
 tests/liquidity-pool.test.ts,7/3/73c3c9a28b215cf5e570498f689002d1fb1a5775
 I
 contracts/governance.clar,3/e/3e11ff9ecf5cff40241c69670308e29f84df23b7
+H
+tests/governance.test.ts,c/e/ce14344de9ea9b63c3c2c3228c80d12874bc7dff
