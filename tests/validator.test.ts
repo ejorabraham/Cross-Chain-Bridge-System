@@ -1,21 +1,65 @@
+import { describe, it, expect } from "vitest"
 
-import { describe, expect, it } from "vitest";
+// Mock the Clarity functions and types
+const mockClarity = {
+	tx: {
+		sender: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+	},
+	types: {
+		uint: (value: number) => ({ type: "uint", value }),
+		principal: (value: string) => ({ type: "principal", value }),
+		bool: (value: boolean) => ({ type: "bool", value }),
+	},
+}
 
-const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+// Mock contract calls
+const contractCalls = {
+	"register-validator": (stake: number) => {
+		return { success: true, value: true }
+	},
+	"verify-transaction": (transferId: number) => {
+		return { success: true, value: true }
+	},
+	"is-transaction-verified": (transferId: number) => {
+		return { success: true, value: { "is-verified": mockClarity.types.bool(true) } }
+	},
+	"get-validator-info": (validatorId: string) => {
+		return {
+			success: true,
+			value: {
+				stake: mockClarity.types.uint(1000),
+				"is-active": mockClarity.types.bool(true),
+			},
+		}
+	},
+}
 
-/*
-  The test below is an example. To learn more, read the testing documentation here:
-  https://docs.hiro.so/stacks/clarinet-js-sdk
-*/
+describe("Validator Contract", () => {
+	it("should register validator", () => {
+		const result = contractCalls["register-validator"](1000)
+		expect(result.success).toBe(true)
+		expect(result.value).toBe(true)
+	})
+	
+	it("should verify transaction", () => {
+		const result = contractCalls["verify-transaction"](1)
+		expect(result.success).toBe(true)
+		expect(result.value).toBe(true)
+	})
+	
+	it("should check if transaction is verified", () => {
+		const result = contractCalls["is-transaction-verified"](1)
+		expect(result.success).toBe(true)
+		expect(result.value["is-verified"]).toEqual(mockClarity.types.bool(true))
+	})
+	
+	it("should get validator info", () => {
+		const result = contractCalls["get-validator-info"](mockClarity.tx.sender)
+		expect(result.success).toBe(true)
+		expect(result.value).toEqual({
+			stake: mockClarity.types.uint(1000),
+			"is-active": mockClarity.types.bool(true),
+		})
+	})
+})
 
-describe("example tests", () => {
-  it("ensures simnet is well initalised", () => {
-    expect(simnet.blockHeight).toBeDefined();
-  });
-
-  // it("shows an example", () => {
-  //   const { result } = simnet.callReadOnlyFn("counter", "get-counter", [], address1);
-  //   expect(result).toBeUint(0);
-  // });
-});

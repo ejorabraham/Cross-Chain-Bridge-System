@@ -5,3 +5,5 @@
 vitest.config.js,e/0/e07f8ead7c602b60a2232e5ffe6110c6ee0d3968
 H
 contracts/validator.clar,9/5/9541003f212282eb172ae127269da31e05183dcb
+G
+tests/validator.test.ts,d/1/d15e3b2118c810e94cb3acb4868184e0f7858fdb
