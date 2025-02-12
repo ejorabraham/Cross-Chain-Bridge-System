@@ -7,3 +7,5 @@ H
 contracts/validator.clar,9/5/9541003f212282eb172ae127269da31e05183dcb
 G
 tests/validator.test.ts,d/1/d15e3b2118c810e94cb3acb4868184e0f7858fdb
+M
+contracts/liquidity-pool.clar,f/b/fb28643b528e585a74e617d158c5a82ef9a2dde7
